@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+       - image: gcr.io/<your-project>/custom-wordpress:v1
+         name: wordpress
+         env:
+         - name: "WORDPRESS_DB_HOST"
+           value: "<cloudsql-ip>:3306"        
+         - name: WORDPRESS_DB_USER
+           valueFrom:
+             secretKeyRef:
+               name: cloudsql-db-credentials
+               key: username
+         - name: WORDPRESS_DB_PASSWORD
+           valueFrom:
+             secretKeyRef:
+               name: cloudsql-db-credentials
+               key: password
+         ports:
+          - containerPort: 80
+          - containerPort: 443
+            name: wordpress
+         volumeMounts:
+            - name: wp-html-vc
+              mountPath: /var/www/html
+            - name: wp-certbot-vc
+              mountPath: /usr/certbot
+      volumes:
+        - name: wp-html-vc
+          persistentVolumeClaim:
+            claimName: wp-html-vc
+        - name: wp-certbot-vc
+          persistentVolumeClaim:
+            claimName: wp-certbot-vc
