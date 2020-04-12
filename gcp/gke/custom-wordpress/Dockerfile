@@ -67,12 +67,6 @@ RUN { \
 		echo 'max_execution_time = 600'; \
 	} > /usr/local/etc/php/conf.d/uploads.ini
 
-RUN { \  
-    echo 'wp() {'; \
-    echo ' /usr/local/bin/wp "$@" --allow-root'; \
-    echo '}'
-	} > ~/.bashrc
-
 # https://wordpress.org/support/article/editing-wp-config-php/#configure-error-logging
 RUN { \
 # https://www.php.net/manual/en/errorfunc.constants.php
