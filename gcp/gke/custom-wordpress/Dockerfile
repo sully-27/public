@@ -114,13 +114,13 @@ RUN set -ex; \
 	chown -R www-data:www-data /usr/src/wordpress
 
 RUN set -ex; \
-    curl -O "https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"; \
-    chmod +x wp-cli.phar; \
-    mv wp-cli.phar /usr/local/bin/wp; \
-    mkdir /usr/certbot && cd /usr/certbot; \
-    wget https://dl.eff.org/certbot-auto; \
-    chmod a+x certbot-auto; \
-    certbot-auto --install-only -q
+	curl -O "https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"; \
+	chmod +x wp-cli.phar; \
+	mv wp-cli.phar /usr/local/bin/wp; \
+	mkdir /usr/certbot && cd /usr/certbot; \
+	wget https://dl.eff.org/certbot-auto; \
+	chmod a+x certbot-auto; \
+	./certbot-auto --os-packages-only --non-interactive
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
