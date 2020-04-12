@@ -119,7 +119,7 @@ RUN set -ex; \
     mv wp-cli.phar /usr/local/bin/wp; \
     mkdir /usr/certbot && cd /usr/certbot; \
     wget https://dl.eff.org/certbot-auto; \
-    chmod a+x certbot-auto
+    chmod a+x certbot-auto; \
     certbot-auto --install-only -q
 
 COPY docker-entrypoint.sh /usr/local/bin/
