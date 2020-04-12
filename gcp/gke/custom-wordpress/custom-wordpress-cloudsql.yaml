@@ -17,6 +17,8 @@ spec:
       containers:
        - image: gcr.io/<your-project>/custom-wordpress:v1
          name: wordpress
+         command: ["/bin/sh","-c"]
+         args: ["cd /usr/certbot && ./certbot-auto --config-dir /usr/certbot/ --agree-tos -m <your-email> -d <your.domain.com> --redirect --keep-until-expiring && while true; do sleep 30; done;"]   
          env:
          - name: "WORDPRESS_DB_HOST"
            value: "<cloudsql-ip>:3306"        
